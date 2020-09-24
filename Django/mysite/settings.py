@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # 我的应用程序
     'myapp1',
+    'myapp2',
     'users',
 ]
 
@@ -129,3 +130,10 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 LOGIN_URL = '/users/login/'
+
+DATABASE_ROUTERS = ['mysite.database_router.DatabaseAppsRouter']
+DATABASE_APPS_MAPPING = {
+    # example:
+    # 'app_name':'database_name',
+    'myapp2': 'jianghua519',
+}

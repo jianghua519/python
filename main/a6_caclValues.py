@@ -183,7 +183,7 @@ def cacl_high_low_gap(share_code, from_date, standard_count_of_days=0):
 def calc_all_values(share_code, from_date, standard_count_of_days=0):
     cl = a0_functions.RunSQL()
 
-    cl.sql = "SELECT  `start_price`, `high_price`, `low_price`, `finishi_price`, `trade_total` FROM " \
+    cl.sql = "SELECT  `start_price`, `high_price`, `low_price`, `finishi_price`, `trade_total` , `trade_date`  FROM " \
              "`DailyShareInfo` WHERE `trade_date` > '{}' and `share_code`= '{}'".format(from_date, share_code)
     cl.exec_select_sql()
 
@@ -192,6 +192,7 @@ def calc_all_values(share_code, from_date, standard_count_of_days=0):
     wk_low_price_list = [i[2] for i in cl.out_list]
     wk_finishi_price_list = [i[3] for i in cl.out_list]
     wk_trade_total_list = [i[4] for i in cl.out_list]
+    wk_trade_date_list = [i[5] for i in cl.out_list]
 
     while len(wk_start_price_list) < standard_count_of_days:
         wk_start_price_list.insert(0, '0.00')
@@ -203,6 +204,13 @@ def calc_all_values(share_code, from_date, standard_count_of_days=0):
         wk_finishi_price_list.insert(0, '0.00')
     while len(wk_trade_total_list) < standard_count_of_days:
         wk_trade_total_list.insert(0, '0.00')
+    while len(wk_trade_date_list) < standard_count_of_days:
+        wk_trade_date_list.insert(0, '0000-00-00')
+
+    # 交易日
+    wk_list = [str(i) for i in wk_trade_date_list]
+    del (wk_list[0])
+    str_trade_date = ";".join(wk_list)
 
     # 收盘价
     wk_list = [str(i) for i in wk_finishi_price_list]
@@ -256,7 +264,8 @@ def calc_all_values(share_code, from_date, standard_count_of_days=0):
         wk_list.append(str(wk_trade_money))
     str_total_trade_money = ";".join(wk_list)
 
-    json_list = [{"close_price": str_finishi_price,
+    json_list = [{"str_trade_date": str_trade_date,
+                  "close_price": str_finishi_price,
                   "finishi_price_change_rate": str_finishi_price_change_rate,
                   "price_change": str_price_change,
                   "inday_price_change_rate": str_inday_price_change_rate,
@@ -268,7 +277,7 @@ def calc_all_values(share_code, from_date, standard_count_of_days=0):
     # 把值写入DB
     cl.sql = "delete from Cacl_Values_TBL where  ( share_code = '{}' and data_type = '{}')".format(share_code,
                                                                                                    "json")
-    cl  .exec_update_sql()
+    cl.exec_update_sql()
 
     cl.sql = "INSERT INTO `Cacl_Values_TBL`(`share_code`, `data_type`, `data_json`) " \
              "VALUES ('{}', '{}', '{}')".format(share_code, 'json', json_array)
@@ -303,4 +312,4 @@ def set_all_values():
 # cacl_high_low_gap('4055', '2019-09-17', 240)
 set_all_values()
 
-calc_all_values('4055', '2019-09-17', 240)
+#calc_all_values('9603', '2019-09-17', 240)

@@ -1,3 +1,5 @@
+import logging
+
 from django.shortcuts import render
 from .models import CaclValuesTbl
 
@@ -6,7 +8,8 @@ from .models import CaclValuesTbl
 
 def share(request):
     """显示所有的主题"""
-    topic = CaclValuesTbl.objects.get(share_code='9603')
-    result_topics = CaclValuesTbl.objects.order_by('date_added')
-    context = {'topics': result_topics}
-    return render(request, 'myapp1/topics.html', context)
+    json = CaclValuesTbl.objects.get(share_code='2501')
+    # print(json)
+    logging.info(json)
+    context = {'json': json}
+    return render(request, 'myapp2/json.html', context)

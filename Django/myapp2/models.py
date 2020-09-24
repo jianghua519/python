@@ -47,6 +47,7 @@ class Basiccompanyinfo(models.Model):
     total_trade_money = models.TextField(blank=True, null=True)
 
     class Meta:
+        app_label = 'myapp2'
         managed = False
         db_table = 'BasicCompanyInfo'
 
@@ -57,6 +58,7 @@ class CaclValuesTbl(models.Model):
     data_json = models.TextField()
 
     class Meta:
+        app_label = 'myapp2'
         managed = False
         db_table = 'Cacl_Values_TBL'
         unique_together = (('share_code', 'data_type'),)
@@ -75,6 +77,7 @@ class Dailyshareinfo(models.Model):
     market = models.TextField()
 
     class Meta:
+        app_label = 'myapp2'
         managed = False
         db_table = 'DailyShareInfo'
         unique_together = (('trade_date', 'share_code'),)
