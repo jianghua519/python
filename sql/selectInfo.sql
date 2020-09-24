@@ -1,0 +1,2 @@
+select share_code, share_name,industry,current_price,yestoday_price,total_trade_money,Company_Share_Open_Date,company_summary
+from BasicCompanyInfo;
