@@ -9,7 +9,7 @@ import csv
 import os
 import sys
 import time
-import mariadb
+import pymysql
 
 strPath = "//JIANGHUANAS/Downloads/ShareAnalyze/Data/UnzipedFiles/"
 
@@ -22,17 +22,17 @@ for path, dir_list, file_list in g:
         if file_name[-4:] == ".csv" and not os.path.isfile(strPath + file_name + ".ok"):
             if not os.path.isfile(strPath + file_name + ".ok"):
 
-                # Connect to MariaDB Platform
+                # Connect to pymysql Platform
                 try:
-                    conn = mariadb.connect(
+                    conn = pymysql.connect(
                         user="jianghua519",
                         password="#JH123456xw",
                         host="192.168.31.240",
                         port=3307,
                         database="jianghua519"
                     )
-                except mariadb.Error as e:
-                    print(f"Error connecting to MariaDB Platform: {e}")
+                except pymysql.Error as e:
+                    print("Error connecting to pymysql Platform: ", e)
                     sys.exit(1)
 
                 # Get Cursor
@@ -49,7 +49,7 @@ for path, dir_list, file_list in g:
                                 "`share_name`, `start_price`, `high_price`, `low_price`, `finishi_price`, "
                                 "`trade_total`, `market`) VALUES (%s, %s, %s, %s,%s, %s, %s, %s,%s, %s)",
                                 row)
-                        except mariadb.Error as e:
+                        except pymysql.Error as e:
                             print("     Error record=", row)
                         i = i + 1
                 conn.commit()

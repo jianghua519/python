@@ -22,7 +22,7 @@ def get_all_date_and_share():
     standard_count_of_days = len(cl.out_list)
 
     # 删除过去的内容
-    cl.sql = "DELETE FROM `Cacl_Values_TBL`"
+    cl.sql = "DELETE FROM `Cacl_Values_TBL` where share_code = '0000'"
     cl.exec_update_sql()
 
     # 把日期写入DB
@@ -264,7 +264,7 @@ def calc_all_values(share_code, from_date, standard_count_of_days=0):
         wk_list.append(str(wk_trade_money))
     str_total_trade_money = ";".join(wk_list)
 
-    json_list = [{"str_trade_date": str_trade_date,
+    json_list = [{"trade_date": str_trade_date,
                   "close_price": str_finishi_price,
                   "finishi_price_change_rate": str_finishi_price_change_rate,
                   "price_change": str_price_change,
