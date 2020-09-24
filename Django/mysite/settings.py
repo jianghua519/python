@@ -81,6 +81,14 @@ DATABASES = {
         'PASSWORD': '#JH123456xw',
         'HOST': '192.168.31.240',
         'PORT': '3307',
+    },
+    'jianghua519': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'jianghua519',
+        'USER': 'jianghua519',
+        'PASSWORD': '#JH123456xw',
+        'HOST': '192.168.31.240',
+        'PORT': '3307',
     }
 }
 
