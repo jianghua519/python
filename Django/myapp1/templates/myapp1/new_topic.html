@@ -1,0 +1,12 @@
+{% extends "myapp1/base.html" %}
+
+{% block content %}
+    <p>添加新Topic</p>
+
+    <form action="{% url 'myapp1:new_topic' %}" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button name="submit" >add topic</button>
+    </form>
+
+{% endblock content %}
