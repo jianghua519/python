@@ -1,0 +1,24 @@
+{% extends "myapp1/base.html" %}
+
+{% block content %}
+<h1>所有股票的一览</h1>
+<table style="width: 100%;">
+	<tbody>
+    {% for company in allcompany %}
+		<tr>
+			<td style="width: 25.0583%;">
+                <a href="{% url 'myapp2:share_detail' company.share_code %}">
+                    {{ company.share_code }}
+                </a>
+            </td>
+			<td style="width: 24.9417%;">{{ company.share_name }}</td>
+			<td style="width: 24.9417%;">{{ company.company_marketname }}</td>
+			<td style="width: 25.0583%;">{{ company.industry }}</td>
+		</tr>
+     {% empty %}
+      <li>一个主题也没有</li>
+    {% endfor%}
+	</tbody>
+</table>
+
+{% endblock content %}

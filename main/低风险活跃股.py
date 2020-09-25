@@ -36,7 +36,8 @@ def unpack2dict(in_list):
         text = json.loads(i[1])[0]
         new_items = {}
         for key, value in text.items():
-            new_items[key] = str2dec(text[key])
+            if not key == 'trade_date':
+                new_items[key] = str2dec(text[key])
         # out_list.append([share_code, new_items])
         out_dict[share_code] = new_items
     return out_dict
@@ -52,7 +53,7 @@ def share_select():
     cl.exec_select_sql()
     print("sql   ", time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time())))
     wk_dict = unpack2dict(cl.out_list)
-    select_set = {"活跃指数": [], "涨跌幅>10": [], "近期低价": [], "中等价位股": []}
+    select_set = {"活跃指数": [], "涨跌幅>10": [], "近期低价": [], "中等价位股": [], "近几天成交量放大": []}
 
     for share_code in wk_dict.keys():
 
@@ -76,6 +77,12 @@ def share_select():
         if numpy.mean(abs_list) > 10:
             select_set["涨跌幅>10"].append(share_code)
 
+        # 近几天成交量放大
+        avg1 = numpy.mean(wk_dict[share_code]['close_price'][-1:])
+        avg3 = numpy.mean(wk_dict[share_code]['close_price'][-4:-2])
+        if avg1 > avg3 * decimal.Decimal(1.2):
+            select_set["近几天成交量放大"].append(share_code)
+
         # 近期低价
         max1 = max(wk_dict[share_code]['close_price'][-50:])
         min1 = min(wk_dict[share_code]['close_price'][-50:])
@@ -93,7 +100,9 @@ def share_select():
                 i in select_set["中等价位股"] and \
                 i in select_set["近期低价"]:
             ds.print_share_info(share_code=i)
-
+        if i in select_set["近几天成交量放大"]:
+            print("近几天成交量放大", i)
+            # ds.print_share_info(share_code=i)
 
 # analyze_gap_rate()
 share_select()
