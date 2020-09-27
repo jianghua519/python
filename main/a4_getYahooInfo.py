@@ -4,6 +4,7 @@ Created on Sun Sep  9 11:06:21 2020
 
 @author: jh
 """
+import time
 
 import a0_functions as ct
 from lxml import etree
@@ -88,6 +89,11 @@ def get_info_from_yahoo(str_share_code):
     kesan = dom.xpath('//*[contains(text(), "決算")]/following-sibling::td[1]/text()')
     # 本社所在地
     company_address = dom.xpath('//*[contains(text(), "本社所在地")]/following-sibling::td[1]/text()[1]')
+    if not len(company_address) == 0:
+        print(company_address[0])
+        company_address[0] = company_address[0][0:len(company_address[0])-1]
+        # company_address[0].replace("[", "")
+        print(company_address[0])
 
     if len(share_name) == 0:
         share_name.append("Error")
@@ -204,34 +210,40 @@ listT = ["股票代码",
 
 def get_info(start, step):
     company_list = ct.get_share_code_list_from_daily_price_db()
+    print("一共有多少家公司:",len(company_list))
     while start < len(company_list):
-        print("No.=", start, ",Share code=", company_list[start])
-        # print("i=",start,",",time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()) ,",Start Get Info , Share = " +
-        # "".join(i))
-        list1 = get_info_from_yahoo("".join(company_list[start]))
-        if not str(list1[0]) == "Error":
-            ct.insert_into_basic_infodb(list1)
-        start = start + step
-        # print(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()) ,"i=",start,",Fnished insert into DB, Share = " 
-        # + "".join(i)) 
+        try:
+            print(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()), "No.=", start, ",Share code=", company_list[start])
+            # print("i=",start,",",time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()) ,",Start Get Info , Share = " +
+            # "".join(i))
+            list1 = get_info_from_yahoo("".join(company_list[start]))
+            if not str(list1[0]) == "Error":
+                ct.insert_into_basic_infodb(list1)
+            start = start + step
+            # print(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()) ,"i=",start,",Fnished insert into DB, Share = "
+            # + "".join(i))
+        except:
+            print(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()), "发生了异常")
+            start = start + step
 
 
-#CompanyList = ct.getCompanyListFromDB()
-#创建两个线程
-try:
-    _thread.start_new_thread(get_info, (0, 10))
-    _thread.start_new_thread(get_info, (1, 10))
-    _thread.start_new_thread(get_info, (2, 10))
-    _thread.start_new_thread(get_info, (3, 10))
-    _thread.start_new_thread(get_info, (4, 10))
-    _thread.start_new_thread(get_info, (5, 10))
-    _thread.start_new_thread(get_info, (6, 10))
-    _thread.start_new_thread(get_info, (7, 10))
-    _thread.start_new_thread(get_info, (8, 10))
-    _thread.start_new_thread(get_info, (9, 10))
-
-except:
-    print("Error: unable to start thread")
-
-while 1:
-    pass
+# #CompanyList = ct.getCompanyListFromDB()
+# #创建两个线程
+# try:
+#     _thread.start_new_thread(get_info, (0, 10))
+#     _thread.start_new_thread(get_info, (1, 10))
+#     _thread.start_new_thread(get_info, (2, 10))
+#     _thread.start_new_thread(get_info, (3, 10))
+#     _thread.start_new_thread(get_info, (4, 10))
+#     _thread.start_new_thread(get_info, (5, 10))
+#     _thread.start_new_thread(get_info, (6, 10))
+#     _thread.start_new_thread(get_info, (7, 10))
+#     _thread.start_new_thread(get_info, (8, 10))
+#     _thread.start_new_thread(get_info, (9, 10))
+#
+# except:
+#     print("Error: unable to start thread")
+#
+# while 1:
+#     pass
+get_info(0, 1)

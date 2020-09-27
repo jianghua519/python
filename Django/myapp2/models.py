@@ -64,6 +64,16 @@ class CaclValuesTbl(models.Model):
         unique_together = (('share_code', 'data_type'),)
 
 
+class CacheTable(models.Model):
+    cache_lable = models.CharField(max_length=200)
+    cache_content = models.TextField()
+
+    class Meta:
+        app_label = 'myapp2'
+        managed = False
+        db_table = 'Cache_Table'
+
+
 class Dailyshareinfo(models.Model):
     trade_date = models.DateField(primary_key=True)
     share_code = models.CharField(max_length=4)

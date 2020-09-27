@@ -1,18 +1,177 @@
+
+<!DOCTYPE html><html>
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
 {% extends "myapp1/base.html" %}
 
 {% block content %}
 
-<body>
-<p>交易日期</p>
-<p>
-{{ trade_date }}
-</p>
-<p>收盘价</p>
-<p>
-{{ close_price }}
-</p>
+<table style="width: 100%;">
+	<tbody>
+		<tr>
+			<td style="width: 33.3333%; text-align: left;">
+				{% if  prev.share_code == 'None' %}
+				   前面没有了
+				{% else %}
+				<a href="{% url 'myapp2:share_detail' prev.share_code %}">
+					<strong><span style="font-size: 30px;">prev</span></strong></a>
+				{% endif %}
+			</td>
+			<td style="width: 33.3333%; text-align: center;">
+				<a href="https://stocks.finance.yahoo.co.jp/stocks/detail/?code={{share.share_code}}.T">
+					<strong><span style="font-size: 30px;">Yahoo!</span></strong></a>
+			</td>
+			<td style="width: 33.3333%; text-align: right;">
+				{% if  next.share_code == 'None' %}
+				   后面没有了
+				{% else %}
+				<a href="{% url 'myapp2:share_detail' next.share_code %}">
+					<strong><span style="font-size: 30px;">next</span></strong>	</a>
+				{% endif %}
+			</td>
+		</tr>
+	</tbody>
+</table>
 
-</body>
-</html>
+<table border="1" style="width: 100%;">
+	<tbody>
+		<tr>
+			<td colspan="3" style="width: 99.7797%;">{{ share.share_code }}   {{ share.share_name }}</td>
+		</tr>
+		<tr>
+			<td colspan="3" style="width: 99.7797%;">本社所在地: {{share.company_address}}</td>
+		</tr>
+		<tr>
+			<td colspan="3" style="width: 99.7797%;">{{share.company_summary}}</td>
+		</tr>
+		  <tr>
+		   <td style="width: 25.0000%;"> 市場名: {{share.company_marketname}}   </td>
+		   <td style="width: 25.0000%;"> 业种: {{share.industry}}   </td>
+		   <td style="width: 25.0000%;"> 設立年月日: {{share.company_create_date}}   </td>
+
+		  </tr>
+		  <tr>
+		   <td style="width: 25.0000%;"> 上場年月日: {{share.company_share_open_date}}   </td>
+		   <td style="width: 25.0000%;"> 決算: {{share.kesan}}   </td>
+		   <td style="width: 25.0000%;"> 発行済株式数: {{share.company_total_share}}   </td>
+		   </tr>
+		  <tr>
+		   <td style="width: 25.0000%;"> 時価総額: {{share.company_total_market_price}} 百万円  </td>
+		   <td style="width: 25.0000%;"> 配当利回り（会社予想）: {{share.return_rate}}   </td>
+		   <td style="width: 25.0000%;"> PER（会社予想）: {{share.per}}   </td>
+		  </tr>
+		  <tr>
+		   <td style="width: 25.0000%;"> PBR（実績）: {{share.pbr}}   </td>
+		   <td style="width: 25.0000%;"> EPS（会社予想）: {{share.eps1}}   </td>
+		   <td style="width: 25.0000%;"> BPS（実績）: {{share.eps2}}   </td>
+		  </tr>
+		  <tr>
+		   <td style="width: 25.0000%;"> 年初来高値: {{share.high_price_thisyear}}</td>
+		   <td style="width: 25.0000%;"> 年初来高値日: {{share.high_price_thisyear_date}}</td>
+		   <td style="width: 25.0000%;"> 年初来安値: {{share.low_price_thisyear}}</td>
+		  </tr>
+		  <tr>
+		   <td style="width: 25.0000%;"> 年初来安値日: {{share.low_price_thisyear_date}}   </td>
+		   <td style="width: 25.0000%;"> 信用買残: {{share.credit_buy}}   </td>
+		   <td style="width: 25.0000%;"> 信用売残: {{share.credit_sale}}   </td>
+
+		  </tr>
+		  <tr>
+		   <td style="width: 25.0000%;"> 更新日: {{share.current_price_time}}   </td>
+		   <td style="width: 25.0000%;"> 最新値: {{share.current_price}}   </td>
+		   <td style="width: 25.0000%;"> 前日終値: {{share.yestoday_price}}   </td>
+		  </tr>
+		  <tr>
+		   <td style="width: 25.0000%;"> 始値: {{share.start_price}}   </td>
+		   <td style="width: 25.0000%;"> 高値: {{share.high_price}}   </td>
+		   <td style="width: 25.0000%;"> 安値: {{share.low_price}}   </td>
+		  </tr>
+		　<tr>
+		   <td style="width: 25.0000%;"> 出来高: {{share.total_trade_share}}   </td>
+		   <td style="width: 25.0000%;"> 売買代金: {{share.total_trade_money}} 千円</td>
+		   <td style="width: 25.0000%;"> 値幅制限: {{share.limit_price}}</td>
+		  </tr>
+
+	</tbody>
+</table>
+<p>
+	<br>
+</p>
+<table style="width: 100%;">
+	<tbody>
+		<tr>
+			<td style="width: 33.3333%; text-align: left;">
+				{% if  prev.share_code == 'None' %}
+				   前面没有了
+				{% else %}
+				<a href="{% url 'myapp2:share_detail' prev.share_code %}">
+					<strong><span style="font-size: 30px;">prev</span></strong></a>
+				{% endif %}
+			</td>
+			<td style="width: 33.3333%; text-align: center;">
+				<a href="https://stocks.finance.yahoo.co.jp/stocks/detail/?code={{share.share_code}}.T">
+					<strong><span style="font-size: 30px;">Yahoo!</span></strong></a>
+			</td>
+			<td style="width: 33.3333%; text-align: right;">
+				{% if  next.share_code == 'None' %}
+				   后面没有了
+				{% else %}
+				<a href="{% url 'myapp2:share_detail' next.share_code %}">
+					<strong><span style="font-size: 30px;">next</span></strong>	</a>
+				{% endif %}
+			</td>
+		</tr>
+	</tbody>
+</table>
+
+
+<p>
+	<br>
+</p>
+股价和成交量:
+<p>1日:</p>
+<p><img src="https://chart.yahoo.co.jp/?code={{share.share_code}}.T&tm=1d&vip=off" style="width: 300px;" class="fr-fic fr-dib"></p>
+
+<p>1周:</p>
+<p><img src="https://chart.yahoo.co.jp/?code={{share.share_code}}.T&tm=5d&vip=off" style="width: 300px;" class="fr-fic fr-dib"></p>
+
+<p>1个月:</p>
+<p><img src="https://chart.yahoo.co.jp/?code={{share.share_code}}.T&tm=1m&type=c&log=off&size=m&over=m65,m130,s&add=v&comp=" style="width: 300px;" class="fr-fic fr-dib"></p>
+
+<p>6个月:</p>
+<p><img src="https://chart.yahoo.co.jp/?code={{share.share_code}}.T&tm=6m&type=c&log=off&size=m&over=m65,m130,s&add=v&comp=" style="width: 300px;" class="fr-fic fr-dib"></p>
+
+<p>1年:</p>
+<p><img src="https://chart.yahoo.co.jp/?code={{share.share_code}}.T&tm=1y&type=c&log=off&size=m&over=m65,m130,s&add=v&comp=" style="width: 300px;" class="fr-fic fr-dib"></p>
+
+<table style="width: 100%;">
+	<tbody>
+		<tr>
+			<td style="width: 33.3333%; text-align: left;">
+				{% if  prev.share_code == 'None' %}
+				   前面没有了
+				{% else %}
+				<a href="{% url 'myapp2:share_detail' prev.share_code %}">
+					<strong><span style="font-size: 30px;">prev</span></strong></a>
+				{% endif %}
+			</td>
+			<td style="width: 33.3333%; text-align: center;">
+				<a href="https://stocks.finance.yahoo.co.jp/stocks/detail/?code={{share.share_code}}.T">
+					<strong><span style="font-size: 30px;">Yahoo!</span></strong></a>
+			</td>
+			<td style="width: 33.3333%; text-align: right;">
+				{% if  next.share_code == 'None' %}
+				   后面没有了
+				{% else %}
+				<a href="{% url 'myapp2:share_detail' next.share_code %}">
+					<strong><span style="font-size: 30px;">next</span></strong>	</a>
+				{% endif %}
+			</td>
+		</tr>
+	</tbody>
+</table>
 
 {% endblock content %}
+
+</html>

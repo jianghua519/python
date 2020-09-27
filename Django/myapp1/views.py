@@ -5,6 +5,7 @@ from .models import Topic, Entry
 from .forms import TopicForm, EntryForm
 from django.contrib.auth.decorators import login_required
 
+
 # Create your views here.
 
 
@@ -12,7 +13,8 @@ def index(requests):
     """学习笔记的主页"""
     return render(requests, 'myapp1/index.html')
 
-@login_required
+
+# @login_required
 def topics(request):
     """显示所有的主题"""
     result_topics = Topic.objects.order_by('date_added')
