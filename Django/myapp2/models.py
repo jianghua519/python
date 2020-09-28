@@ -91,3 +91,16 @@ class Dailyshareinfo(models.Model):
         managed = False
         db_table = 'DailyShareInfo'
         unique_together = (('trade_date', 'share_code'),)
+
+
+class FollowTable(models.Model):
+    share_code = models.IntegerField()
+    follow_date = models.DateField()
+    price_at_follow_time = models.FloatField()
+    follow_comment = models.TextField()
+
+    class Meta:
+        app_label = 'myapp2'
+        managed = False
+        db_table = 'Follow_Table'
+

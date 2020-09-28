@@ -1,0 +1,90 @@
+
+<html>
+  <head>
+    <title>Submitting forms</title>
+  </head>
+  <body>
+    <form id="myForm">
+      <input type="button" value="Submit Form" />
+    </form>
+    <script type="text/javascript" src="jquery.js"></script>
+    <script type="text/javascript">
+      $(document).ready(function ()
+      {
+        $('input:button').click(function()
+        {
+          $('#myForm').submit();
+        });
+      });
+    </script>
+  </body>
+
+
+
+<!--<!DOCTYPE html>-->
+
+<!--<script>-->
+<!--window.onload = function (){-->
+<!-- var oSc = document.getElementById('shoucang');-->
+<!-- var onOff = true;-->
+<!--  -->
+<!-- oSc.onclick = function (){-->
+<!--  if(onOff){-->
+<!--   oSc.innerHTML = '<i class="yishoucang"></i>'+'已收藏';-->
+<!--   oSc.style.backgroundColor = '#87aab5';-->
+<!--   onOff = false; -->
+<!--  }else{-->
+<!--   oSc.innerHTML = '收藏文章';-->
+<!--   oSc.style.backgroundColor = '#87aab5';-->
+<!--   onOff = true;-->
+<!--  }-->
+<!-- };-->
+<!--  -->
+<!-- oSc.onmouseover = function (){-->
+<!--  if(onOff){-->
+<!--   oSc.style.backgroundColor = '#03a6d7'; -->
+<!--  }else{-->
+<!--   oSc.innerHTML = '取消收藏';-->
+<!--   oSc.style.backgroundColor = '#527884';-->
+<!--  }-->
+<!-- };-->
+<!--  -->
+<!-- oSc.onmouseout = function (){-->
+<!--  if(onOff){-->
+<!--   oSc.style.backgroundColor = '#00b7ee'; -->
+<!--  }else{-->
+<!--   oSc.innerHTML = '<i class="yishoucang"></i>'+'已收藏';-->
+<!--   oSc.style.backgroundColor = '#87aab5';-->
+<!--  }-->
+<!-- };-->
+<!--}-->
+<!--</script>-->
+<!--<style type="text/css">-->
+<!--#shoucang{-->
+<!-- background-color:#00b7ee;-->
+<!-- line-height:36px;-->
+<!-- width:88px;-->
+<!-- text-align:center;-->
+<!-- font-size:14px;-->
+<!-- color:#ffffff;-->
+<!-- border-radius:2px;-->
+<!-- cursor:pointer;-->
+<!-- }-->
+<!--.yishoucang{-->
+<!-- width:11px;-->
+<!-- height:8px;-->
+<!-- background:url(img/yishoucang.png);-->
+<!-- display:inline-block;-->
+<!-- margin-right:9px;-->
+<!-- }-->
+
+<!--</style>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>Title</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--<div id="shoucang">收藏文章</div>-->
+<!--</body>-->
+<!--</html>-->

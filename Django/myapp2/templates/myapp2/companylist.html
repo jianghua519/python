@@ -1,24 +1,54 @@
 {% extends "myapp1/base.html" %}
 
 {% block content %}
-<h1>所有股票的一览</h1>
+<hr>
+{% if follows %}
+    <a href="{% url 'myapp2:share' %}?from=follow"> {{ follows }} </a>  &nbsp&nbsp&nbsp
+{% endif %}
+
+{% for list in lists %}
+
+<a href="{% url 'myapp2:share' %}?from={{ list }}"> {{ list }} </a>  &nbsp&nbsp
+
+{% endfor%}
+<hr>
+{% for list in lists_industry %}
+
+<a href="{% url 'myapp2:share' %}?from={{ list }}"> {{ list }} </a>  &nbsp&nbsp
+
+{% endfor%}
+<hr>
+
+
 <table style="width: 100%;">
 	<tbody>
     {% for company in allcompany %}
 		<tr>
-			<td style="width: 25.0583%;">
-                <a href="{% url 'myapp2:share_detail' company.share_code %}">
+			<td style="width: 15%;">
+                <a href="{% url 'myapp2:share_detail' company.share_code %}?from={{ from }}">
                     {{ company.share_code }}
                 </a>
             </td>
-			<td style="width: 24.9417%;">{{ company.share_name }}</td>
-			<td style="width: 24.9417%;">{{ company.company_marketname }}</td>
-			<td style="width: 25.0583%;">{{ company.industry }}</td>
+			<td style="width: 40%;">{{ company.share_name }}</td>
+			<td style="width: 25%;">{{ company.company_marketname }}</td>
+			<td style="width: 25%;">{{ company.industry }}</td>
 		</tr>
      {% empty %}
       <li>一个主题也没有</li>
     {% endfor%}
 	</tbody>
 </table>
+<hr>
+<!--{% for list in lists %}-->
 
+<!--<a href="{% url 'myapp2:share' %}?from={{ list }}"> {{ list }} </a>  &nbsp&nbsp-->
+
+<!--{% endfor%}-->
+<!--<hr>-->
+<!--{% for list in lists_industry %}-->
+
+<!--<a href="{% url 'myapp2:share' %}?from={{ list }}"> {{ list }} </a>  &nbsp&nbsp-->
+
+<!--{% endfor%}-->
+<!--<hr>-->
 {% endblock content %}

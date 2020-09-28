@@ -1,1 +1,1 @@
-robocopy C:\Users\jh\workspace\App\python\ \\JIANGHUANAS\Downloads\ShareAnalyze\App\python\ /MIR  /XD C:\Users\jh\workspace\App\python\env
+robocopy C:\Users\jh\workspace\App\python\ \\JIANGHUANAS\Downloads\ShareAnalyze\App\python\ /MIR  /XD C:\Users\jh\workspace\App\python\env C:\Users\jh\workspace\App\python\.git
