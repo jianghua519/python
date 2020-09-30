@@ -8,7 +8,6 @@ import time
 
 import a0_functions as ct
 from lxml import etree
-import _thread
 
 
 def get_info_from_yahoo(str_share_code):
@@ -91,7 +90,7 @@ def get_info_from_yahoo(str_share_code):
     company_address = dom.xpath('//*[contains(text(), "本社所在地")]/following-sibling::td[1]/text()[1]')
     if not len(company_address) == 0:
         print(company_address[0])
-        company_address[0] = company_address[0][0:len(company_address[0])-1]
+        company_address[0] = company_address[0][0:len(company_address[0]) - 1]
         # company_address[0].replace("[", "")
         print(company_address[0])
 
@@ -206,22 +205,26 @@ listT = ["股票代码",
          "売買代金"]
 
 
+def save_company_info_to_db(str_share_code):
+    list1 = get_info_from_yahoo(str_share_code)
+    print(list1)
+    if not str(list1[0]) == "Error":
+        ct.insert_into_basic_infodb(list1)
+
+
 # print(";".join(listT))
 
 def get_info(start, step):
     company_list = ct.get_share_code_list_from_daily_price_db()
-    print("一共有多少家公司:",len(company_list))
+    print("所有公司数:", len(company_list))
     while start < len(company_list):
         try:
-            print(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()), "No.=", start, ",Share code=", company_list[start])
-            # print("i=",start,",",time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()) ,",Start Get Info , Share = " +
-            # "".join(i))
+            print(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()), "No.=", start, ",Share code=",
+                  company_list[start])
             list1 = get_info_from_yahoo("".join(company_list[start]))
             if not str(list1[0]) == "Error":
                 ct.insert_into_basic_infodb(list1)
             start = start + step
-            # print(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()) ,"i=",start,",Fnished insert into DB, Share = "
-            # + "".join(i))
         except:
             print(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()), "发生了异常")
             start = start + step
@@ -246,4 +249,9 @@ def get_info(start, step):
 #
 # while 1:
 #     pass
+# get_info(0, 1)
+#
+# #get_info_from_yahoo("2531")
+# save_company_info_to_db("2531")
+
 get_info(0, 1)

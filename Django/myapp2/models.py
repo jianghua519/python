@@ -104,3 +104,44 @@ class FollowTable(models.Model):
         managed = False
         db_table = 'Follow_Table'
 
+class Basiccompanyinfo2(models.Model):
+    share_code = models.CharField(primary_key=True, max_length=4)
+    share_name = models.TextField(blank=True, null=True)
+    english_name = models.TextField(blank=True, null=True)
+    company_marketname = models.TextField(db_column='Company_MarketName', blank=True, null=True)  # Field name made lowercase.
+    industry = models.TextField(blank=True, null=True)
+    company_create_date = models.TextField(db_column='Company_Create_Date', blank=True, null=True)  # Field name made lowercase.
+    company_share_open_date = models.TextField(db_column='Company_Share_Open_Date', blank=True, null=True)  # Field name made lowercase.
+    kesan = models.TextField(blank=True, null=True)
+    company_address = models.TextField(db_column='Company_Address', blank=True, null=True)  # Field name made lowercase.
+    company_summary = models.TextField(blank=True, null=True)
+    company_total_share = models.TextField(blank=True, null=True)
+    company_total_market_price = models.TextField(blank=True, null=True)
+    return_rate = models.TextField(blank=True, null=True)
+    return_per_share = models.TextField(blank=True, null=True)
+    return_yymm = models.TextField(blank=True, null=True)
+    limit_price = models.TextField(blank=True, null=True)
+    per = models.TextField(blank=True, null=True)
+    pbr = models.TextField(blank=True, null=True)
+    eps1 = models.TextField(blank=True, null=True)
+    eps2 = models.TextField(blank=True, null=True)
+    high_price_thisyear = models.TextField(blank=True, null=True)
+    high_price_thisyear_date = models.TextField(blank=True, null=True)
+    low_price_thisyear = models.TextField(blank=True, null=True)
+    low_price_thisyear_date = models.TextField(blank=True, null=True)
+    credit_buy = models.TextField(blank=True, null=True)
+    credit_sale = models.TextField(blank=True, null=True)
+    current_price = models.TextField(blank=True, null=True)
+    current_price_time = models.TextField(blank=True, null=True)
+    changed = models.CharField(max_length=100, blank=True, null=True)
+    yestoday_price = models.TextField(blank=True, null=True)
+    start_price = models.TextField(blank=True, null=True)
+    high_price = models.TextField(blank=True, null=True)
+    low_price = models.TextField(blank=True, null=True)
+    total_trade_share = models.TextField(blank=True, null=True)
+    total_trade_money = models.TextField(blank=True, null=True)
+
+    class Meta:
+        app_label = 'myapp2'
+        managed = False
+        db_table = 'BasicCompanyInfo2'

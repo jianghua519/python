@@ -6,6 +6,10 @@
     <a href="{% url 'myapp2:share' %}?from=follow"> {{ follows }} </a>  &nbsp&nbsp&nbsp
 {% endif %}
 
+{% if autoSelected %}
+    <a href="{% url 'myapp2:share' %}?from=autoSelected"> {{ autoSelected }} </a>  &nbsp&nbsp&nbsp
+{% endif %}
+
 {% for list in lists %}
 
 <a href="{% url 'myapp2:share' %}?from={{ list }}"> {{ list }} </a>  &nbsp&nbsp

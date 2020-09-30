@@ -3,7 +3,7 @@ import a0_functions
 rs = a0_functions.RunSQL()
 
 # 取得股票列表
-rs.sql = "select share_code, share_name ,industry, company_marketname from BasicCompanyInfo where industry != ' '"
+rs.sql = "select share_code, share_name ,industry, company_marketname from `BasicCompanyInfo2` where industry != ' '"
 rs.exec_select_sql()
 
 wk_dict = {}
@@ -26,7 +26,7 @@ for i in wk_dict.keys():
 
 # 取得股票列表(按业种)
 rs.sql = "select industry , count(*) " \
-         "from BasicCompanyInfo where industry != ' ' group  by industry"
+         "from BasicCompanyInfo2 where industry != ' ' group  by industry"
 rs.exec_select_sql()
 
 #业种list
@@ -37,7 +37,7 @@ wk_dict = {}
 k = " "
 
 for i in wk_list:
-    rs.sql = "select share_code, share_name ,industry, company_marketname from BasicCompanyInfo where industry ='{}'".format(i[0])
+    rs.sql = "select share_code, share_name ,industry, company_marketname from BasicCompanyInfo2 where industry ='{}'".format(i[0])
     rs.exec_select_sql()
 
     lable = str(i[0] + '('+str(i[1])+')')

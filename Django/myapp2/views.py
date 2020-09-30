@@ -2,7 +2,7 @@ import datetime
 
 from django.shortcuts import render, redirect
 
-from .models import Basiccompanyinfo, CacheTable, FollowTable
+from .models import Basiccompanyinfo2, CacheTable, FollowTable
 
 
 # Create your views here.
@@ -19,6 +19,11 @@ def share(request):
     wk_list = [i.cache_lable for i in list_by_industry]
     context["lists_industry"] = wk_list
 
+    # 取得自动选推荐股票
+    auto_selected = CacheTable.objects.get(cache_lable='autoSelected')
+    wk_list = auto_selected.cache_content.split(';')
+    context["autoSelected"] = "自动推荐的股票({})".format(len(wk_list))
+
     # 取得关注的list
     context["follows"] = "关注的股票({})".format(FollowTable.objects.count())
 
@@ -27,7 +32,7 @@ def share(request):
         follows = FollowTable.objects.all()
         wk_follow_list = []
         for i in follows:
-            bc = Basiccompanyinfo.objects.get(share_code=i.share_code)
+            bc = Basiccompanyinfo2.objects.get(share_code=i.share_code)
             one = ",".join([bc.share_code, bc.share_name, bc.industry, bc.company_marketname])
             wk_follow_list.append(one)
         CacheTable.objects.filter(cache_lable="follow").delete()
@@ -61,10 +66,13 @@ def share(request):
 def share_detail(request, share_code):
     """显示某只股票信息"""
     context = {}
-    s1 = Basiccompanyinfo.objects.get(share_code=share_code)
+    s1 = Basiccompanyinfo2.objects.get(share_code=share_code)
 
     # 修改会社概要　
-    s1.company_summary = s1.company_summary.split("の会社概要。")[1]
+    # s1.company_summary = s1.company_summary.split("の会社概要。")[1]
+    # 修改前日比　
+    s1.changed = s1.changed.replace("（", "\n（")
+    print(s1.changed)
     context['share'] = s1
 
     # 查询归属列表里的前后股票
@@ -95,12 +103,15 @@ def share_detail(request, share_code):
 
 
 def add_follow(request, share_code):
-    bc = Basiccompanyinfo.objects.get(share_code=share_code)
+    bc = Basiccompanyinfo2.objects.get(share_code=share_code)
 
     new_follow = FollowTable(share_code=share_code)
     new_follow.follow_date = datetime.datetime.now()
     new_follow.price_at_follow_time = float(bc.current_price.replace(',', ''))
-    new_follow.follow_comment = "通过网页关注"
+    if request.GET.get("comment") == "":
+        new_follow.follow_comment = "一键关注."
+    else:
+        new_follow.follow_comment = request.GET.get("comment")
     new_follow.save()
 
     url = "/share/" + share_code + "?from=" + request.GET.get("from")

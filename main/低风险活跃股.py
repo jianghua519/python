@@ -15,7 +15,6 @@ def str2dec(instr):
 
 def unpack(in_list):
     out_list = []
-    out_dict = {}
     for i in in_list:
         share_code = i[0]
         # print(share_code)
@@ -28,7 +27,6 @@ def unpack(in_list):
 
 
 def unpack2dict(in_list):
-    out_list = []
     out_dict = {}
     for i in in_list:
         share_code = i[0]
@@ -45,6 +43,7 @@ def unpack2dict(in_list):
 
 
 def share_select():
+    out_list = []
     cl = a0_functions.RunSQL()
     ds = a0_functions.DiaplayShareInfo()
 
@@ -100,9 +99,28 @@ def share_select():
                 i in select_set["中等价位股"] and \
                 i in select_set["近期低价"]:
             ds.print_share_info(share_code=i)
-        if i in select_set["近几天成交量放大"]:
-            print("近几天成交量放大", i)
-            # ds.print_share_info(share_code=i)
+            out_list.append(i)
+        # if i in select_set["近几天成交量放大"]:
+        #     print("近几天成交量放大", i)
+        #     # ds.print_share_info(share_code=i)
+    return out_list
+
 
 # analyze_gap_rate()
-share_select()
+# callable()
+
+rs = a0_functions.RunSQL()
+lable = "autoSelected"
+content = []
+for i in share_select():
+    rs.sql = "select share_code, share_name ,industry, company_marketname from BasicCompanyInfo " \
+             "where industry != ' ' and share_code ='{}'".format(i)
+    rs.exec_select_sql()
+    if len(rs.out_list) > 0:
+        content.append(",".join(rs.out_list[0]))
+
+rs.sql = "delete from Cache_Table where cache_lable like '{}'".format(lable)
+rs.exec_update_sql()
+rs.sql = "INSERT INTO `Cache_Table` (`id`, `cache_lable`, `cache_content`) " \
+         "VALUES (NULL, '{}', '{}')".format(lable, ';'.join(content))
+rs.exec_update_sql()
