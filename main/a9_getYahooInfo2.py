@@ -73,8 +73,8 @@ def accecc_yahoo(str_share_code):
 
     soup_select(soup, s.selectlist1, wk_dict)
 
-    if wk_dict["share_name"] == "":
-        print(str_share_code, "not found")
+    if wk_dict["share_name"] == "" or wk_dict["current_price"] == "---":
+        print(str_share_code, "not found,または　株価は取得エラー")
         return
 
     yahoo_url = "https://profile.yahoo.co.jp/fundamental/" + str_share_code
